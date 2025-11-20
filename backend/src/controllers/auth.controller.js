@@ -1,4 +1,4 @@
-import * as authService from "../services/auth.service";
+import * as authService from "../services/auth.service.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -37,6 +37,7 @@ export const refreshToken = async (req, res, next) => {
   try {
     const { refreshToken } = req.body;
     const result = await authService.refreshAccessToken(refreshToken);
+    res.json(result);
   } catch (error) {
     next(error);
   }

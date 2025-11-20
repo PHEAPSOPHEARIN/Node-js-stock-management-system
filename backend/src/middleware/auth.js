@@ -1,5 +1,5 @@
-import { verifyAccessToken } from "../utils/jwt";
-import prisma from "../config/prisma";
+import { verifyAccessToken } from "../utils/jwt.js"; // ← .js extension
+import prisma from "../config/prisma.js"; // ← .js extension
 
 export const authenticateToken = async (req, res, next) => {
   try {

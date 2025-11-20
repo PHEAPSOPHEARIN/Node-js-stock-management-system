@@ -1,12 +1,13 @@
 import express from "express";
-import core from "cors";
-import helment from "morgan";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
 import compression from "compression";
 import dotenv from "dotenv";
 
-import authRoutes from "./routes/auth.routes";
-import { errorHandler } from "./middleware/errorHandler";
-import morgan from "morgan";
+// IMPORTANT: Add .js extension to all imports!
+import authRoutes from "./routes/auth.routes.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
 
@@ -14,9 +15,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(helment());
+app.use(helmet());
 app.use(
-  core({
+  cors({
     origin: process.env.CORS_ORIGIN || "http://localhost:5173",
     credentials: true,
   })

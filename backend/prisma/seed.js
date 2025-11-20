@@ -7,6 +7,7 @@ async function main() {
   console.log("🌱 Seeding database...");
 
   // Create roles
+  console.log("Creating roles...");
   const roles = await Promise.all([
     prisma.role.create({
       data: {
@@ -58,6 +59,7 @@ async function main() {
   console.log("✅ Roles created");
 
   // Create permissions
+  console.log("Creating permissions...");
   const permissions = [
     {
       name: "users.create",
@@ -120,12 +122,6 @@ async function main() {
       action: "adjust",
     },
     {
-      name: "stock.transfer",
-      displayName: "Transfer Stock",
-      resource: "stock",
-      action: "transfer",
-    },
-    {
       name: "companies.create",
       displayName: "Create Companies",
       resource: "companies",
@@ -137,36 +133,13 @@ async function main() {
       resource: "companies",
       action: "read",
     },
-    {
-      name: "companies.update",
-      displayName: "Update Companies",
-      resource: "companies",
-      action: "update",
-    },
-    {
-      name: "companies.delete",
-      displayName: "Delete Companies",
-      resource: "companies",
-      action: "delete",
-    },
-    {
-      name: "reports.view",
-      displayName: "View Reports",
-      resource: "reports",
-      action: "view",
-    },
-    {
-      name: "reports.export",
-      displayName: "Export Reports",
-      resource: "reports",
-      action: "export",
-    },
   ];
 
   await prisma.permission.createMany({ data: permissions });
   console.log("✅ Permissions created");
 
   // Assign all permissions to SUPER_ADMIN
+  console.log("Assigning permissions to roles...");
   const allPermissions = await prisma.permission.findMany();
   await prisma.rolePermission.createMany({
     data: allPermissions.map((p) => ({
@@ -178,6 +151,7 @@ async function main() {
   console.log("✅ Role permissions assigned");
 
   // Create admin user
+  console.log("Creating admin user...");
   const hashedPassword = await bcrypt.hash("admin123", 10);
   const adminUser = await prisma.user.create({
     data: {
@@ -190,9 +164,8 @@ async function main() {
   });
 
   console.log("✅ Admin user created");
-  console.log("📧 Email: admin@example.com");
+  console.log("\n📧 Email: admin@example.com");
   console.log("🔑 Password: admin123");
-
   console.log("\n🎉 Seeding completed successfully!");
 }
 

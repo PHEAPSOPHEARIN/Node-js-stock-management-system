@@ -9,15 +9,13 @@ export const generateAccessToken = (user) => {
       roleName: user.role?.name,
     },
     process.env.JWT_ACCESS_SECRET,
-    {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "15m",
-    }
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "15m" }
   );
 };
 
-export const genrateRefreshToken = (user) => {
+export const generateRefreshToken = (user) => {
   return jwt.sign({ id: user.id }, process.env.JWT_REFRESH_SECRET, {
-    expiresIn: process.env.RERESH_TOKEN_EXPIRY || "7d",
+    expiresIn: process.env.REFRESH_TOKEN_EXPIRY || "7d",
   });
 };
 
